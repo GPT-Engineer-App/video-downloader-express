@@ -3,7 +3,7 @@ import { Box, Text } from "@chakra-ui/react";
 
 function VideoPlayer({ downloadedVideos }) {
   const { id } = useParams();
-  const video = downloadedVideos.find((video) => video.id === id);
+  const video = downloadedVideos.find((video) => video.id === Number(id));
 
   if (!video) {
     return <Text>Video not found</Text>;
