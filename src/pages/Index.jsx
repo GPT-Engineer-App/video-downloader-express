@@ -28,6 +28,12 @@ const Index = ({ setDownloadedVideos }) => {
         if (oldProgress === 100) {
           clearInterval(interval);
           setIsDownloading(false);
+          const newVideo = {
+            id: new Date().getTime(),
+            title: `Video from ${url}`,
+            format: format,
+          };
+          setDownloadedVideos((prevVideos) => [...prevVideos, newVideo]);
           toast({
             title: "Download completed",
             description: `Video in ${format} format has been downloaded.`,
