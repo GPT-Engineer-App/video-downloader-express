@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Container, VStack, Input, Button, Select, Text, Box, Spinner, useToast } from "@chakra-ui/react";
+import { Container, VStack, Input, Button, Select, Text, Box, Spinner, useToast, Progress } from "@chakra-ui/react";
 import { FaDownload } from "react-icons/fa";
 
 const Index = () => {
   const [url, setUrl] = useState("");
   const [format, setFormat] = useState("360p");
   const toast = useToast();
+  const [progress, setProgress] = useState(0);
   const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDownload = () => {
@@ -22,16 +23,23 @@ const Index = () => {
 
     setIsDownloading(true);
 
-    setTimeout(() => {
-      setIsDownloading(false);
-      toast({
-        title: "Download completed",
-        description: `Video in ${format} format has been downloaded.`,
-        status: "success",
-        duration: 3000,
-        isClosable: true,
+    const interval = setInterval(() => {
+      setProgress((oldProgress) => {
+        if (oldProgress === 100) {
+          clearInterval(interval);
+          setIsDownloading(false);
+          toast({
+            title: "Download completed",
+            description: `Video in ${format} format has been downloaded.`,
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+          return 0;
+        }
+        return Math.min(oldProgress + 10, 100);
       });
-    }, 5000);
+    }, 500);
   };
 
   return (
@@ -50,6 +58,7 @@ const Index = () => {
           {isDownloading ? "Downloading..." : "Download"}
         </Button>
         {isDownloading && <Spinner />}
+        {isDownloading && <Progress value={progress} size="xs" width="100%" />}
       </VStack>
     </Container>
   );
