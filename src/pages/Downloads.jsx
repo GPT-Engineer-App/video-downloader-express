@@ -1,5 +1,6 @@
 import React from "react";
-import { Container, VStack, Text, List, ListItem, ListIcon } from "@chakra-ui/react";
+import { Container, VStack, Text, List, ListItem, ListIcon, Link } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 import { FaVideo } from "react-icons/fa";
 
 const Downloads = ({ downloadedVideos }) => {
@@ -12,8 +13,10 @@ const Downloads = ({ downloadedVideos }) => {
         <List spacing={3} width="100%">
           {downloadedVideos.map((video) => (
             <ListItem key={video.id}>
-              <ListIcon as={FaVideo} color="green.500" />
-              {video.title} - {video.format}
+              <Link as={RouterLink} to={`/video/${video.id}`} color="blue.500">
+                <ListIcon as={FaVideo} color="green.500" />
+                {video.title} - {video.format}
+              </Link>
             </ListItem>
           ))}
         </List>
