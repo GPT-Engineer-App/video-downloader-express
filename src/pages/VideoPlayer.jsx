@@ -6,7 +6,6 @@ function VideoPlayer({ downloadedVideos }) {
   const video = downloadedVideos.find((video) => video.id === Number(id));
 
   if (!video) {
-    return <Text>Video not found</Text>;
   }
 
   return (

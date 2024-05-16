@@ -32,6 +32,7 @@ const Index = ({ setDownloadedVideos }) => {
             id: new Date().getTime(),
             title: `Video from ${url}`,
             format: format,
+            url: `https://example.com/videos/${new Date().getTime()}.mp4`,
           };
           setDownloadedVideos((prevVideos) => [...prevVideos, newVideo]);
           toast({
