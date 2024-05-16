@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Container, VStack, Input, Button, Select, Text, Box, IconButton, useToast } from "@chakra-ui/react";
+import { Container, VStack, Input, Button, Select, Text, Box, Spinner, useToast } from "@chakra-ui/react";
 import { FaDownload } from "react-icons/fa";
 
 const Index = () => {
   const [url, setUrl] = useState("");
   const [format, setFormat] = useState("360p");
   const toast = useToast();
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDownload = () => {
     if (!url) {
@@ -19,21 +20,18 @@ const Index = () => {
       return;
     }
 
-    // This is where you would typically make a request to your backend server to handle the download
-    // For example:
-    // fetch(`/api/download?url=${url}&format=${format}`)
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     // Handle the response data
-    //   });
+    setIsDownloading(true);
 
-    toast({
-      title: "Download started",
-      description: `Downloading video in ${format} format.`,
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
+    setTimeout(() => {
+      setIsDownloading(false);
+      toast({
+        title: "Download completed",
+        description: `Video in ${format} format has been downloaded.`,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    }, 5000);
   };
 
   return (
@@ -48,9 +46,10 @@ const Index = () => {
           <option value="480p">480p</option>
           <option value="720p">720p</option>
         </Select>
-        <Button leftIcon={<FaDownload />} colorScheme="blue" onClick={handleDownload}>
-          Download
+        <Button leftIcon={<FaDownload />} colorScheme="blue" onClick={handleDownload} isLoading={isDownloading}>
+          {isDownloading ? "Downloading..." : "Download"}
         </Button>
+        {isDownloading && <Spinner />}
       </VStack>
     </Container>
   );
