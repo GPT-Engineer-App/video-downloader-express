@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Container, VStack, Input, Button, Select, Text, Box, Spinner, useToast, Progress } from "@chakra-ui/react";
+import { Container, VStack, Input, Button, Select, Text, Spinner, useToast, Progress } from "@chakra-ui/react";
 import { FaDownload } from "react-icons/fa";
 
-const Index = () => {
+const Index = ({ setDownloadedVideos }) => {
   const [url, setUrl] = useState("");
   const [format, setFormat] = useState("360p");
   const toast = useToast();
